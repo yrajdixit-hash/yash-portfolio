@@ -1,0 +1,30 @@
+.app {
+  min-height: 100vh;
+  position: relative;
+  background-color: var(--bg-primary);
+}
+
+/* Red laser scan progress bar at top */
+.app__progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background-color: var(--accent-vermilion);
+  z-index: 9999;
+  transition: width 0.1s linear;
+  box-shadow: 0 0 8px rgba(255, 59, 0, 0.5);
+}
+
+/* Architectural edge frame lines */
+.app::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: clamp(0.75rem, 2vw, 2rem);
+  width: 1px;
+  background: rgba(0, 0, 0, 0.04);
+  pointer-events: none;
+  z-index: 10;
+}

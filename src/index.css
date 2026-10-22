@@ -1,0 +1,376 @@
+/* ─────────────────────────────────────────────────────────────
+   HERON AI DESIGN SYSTEM — ARCHITECTURAL MODERNISM
+   Reference: https://heronaiapp.com/
+   Palette: Architectural Parchment, Jet Black, Vermilion Red, Subtle Drafting Lines
+───────────────────────────────────────────────────────────── */
+
+:root {
+  /* Canvas & Surfaces (Architectural Parchment / Warm Stone Paper) */
+  --bg-primary:      #E8E6DF;
+  --bg-secondary:    #E2DFD6;
+  --bg-card:         #E5E2D9;
+  --bg-elevated:     #DDD9CF;
+  --bg-dark:         #111111;
+  --bg-dark-card:    #181818;
+
+  /* Typography Colors */
+  --text-primary:    #111111;
+  --text-secondary:  #4A4740;
+  --text-muted:      #7A776E;
+  --text-light:      #F5F3EC;
+  --text-light-muted:#A6A298;
+
+  /* Signature Accents (Heron AI Vermilion / International Orange) */
+  --accent-vermilion:#FF3B00;
+  --accent-orange:   #FF4800;
+  --accent-sand:     #C8C4B7;
+
+  /* Architectural Grid & Border Lines */
+  --border:          #CBC7BC;
+  --border-subtle:   #D9D6CC;
+  --border-strong:   #111111;
+  --border-dark:     #2A2A2A;
+
+  /* Typography Scales */
+  --font-heading:    'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body:       'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono:       'JetBrains Mono', 'Space Mono', monospace;
+
+  /* Transitions */
+  --transition-fast: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-med:  0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-slow: 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Layout geometry */
+  --max-w:           1340px;
+  --section-px:      clamp(1.25rem, 4vw, 4rem);
+  --line-weight:     1px;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   RESET & FOUNDATION
+───────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: auto; /* Lenis handles momentum scroll */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.6;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Paper / drafting canvas subtle texture overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+  background-size: 140px;
+}
+
+/* Architectural blueprint subtle drafting grid */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgba(0, 0, 0, 0.025) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.025) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; border: none; background: none; font: inherit; }
+ul { list-style: none; }
+
+/* ─────────────────────────────────────────────────────────────
+   TYPOGRAPHY SCALE (Swiss / Architectural Modernism)
+───────────────────────────────────────────────────────────── */
+.display-hero {
+  font-family: var(--font-heading);
+  font-size: clamp(2.4rem, 6.2vw, 5.4rem);
+  font-weight: 700;
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+}
+
+.display-lg {
+  font-family: var(--font-heading);
+  font-size: clamp(1.8rem, 4.4vw, 3.4rem);
+  font-weight: 700;
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+}
+
+.display-md {
+  font-family: var(--font-heading);
+  font-size: clamp(1.3rem, 2.8vw, 2.1rem);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+}
+
+.label-sm {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.label-mono {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  color: var(--text-secondary);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   LAYOUT UTILITIES
+───────────────────────────────────────────────────────────── */
+.container {
+  width: 100%;
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--section-px);
+  position: relative;
+  z-index: 1;
+}
+
+.section-gap {
+  padding: clamp(5rem, 9vw, 8.5rem) 0;
+  position: relative;
+  border-bottom: var(--line-weight) solid var(--border);
+}
+
+.divider {
+  width: 100%;
+  height: var(--line-weight);
+  background: var(--border);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   HERON AI ARCHITECTURAL CORNERS & CROSSHAIRS
+───────────────────────────────────────────────────────────── */
+.crosshair {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--text-primary);
+  user-select: none;
+  pointer-events: none;
+  z-index: 5;
+}
+.crosshair--tl { top: -7px; left: -6px; }
+.crosshair--tr { top: -7px; right: -6px; }
+.crosshair--bl { bottom: -7px; left: -6px; }
+.crosshair--br { bottom: -7px; right: -6px; }
+
+/* ── Section Header (Heron AI Architectural Pattern) ── */
+.sec-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 1.25rem;
+  margin-bottom: 3.5rem;
+  border-bottom: var(--line-weight) solid var(--border);
+  gap: 1.5rem;
+}
+.sec-head__title {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.sec-head__num {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--accent-vermilion);
+  font-weight: 600;
+}
+.sec-head__label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+}
+.sec-head__meta {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   BUTTONS (Heron AI Split Box & Vermilion Primary)
+───────────────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  height: 48px;
+  padding: 0;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: var(--line-weight) solid var(--text-primary);
+  background: transparent;
+  color: var(--text-primary);
+  transition: all var(--transition-fast);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn__label {
+  padding: 0 1.4rem;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.btn__icon {
+  width: 48px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-left: var(--line-weight) solid var(--text-primary);
+  transition: transform var(--transition-fast);
+}
+
+.btn:hover {
+  background: var(--text-primary);
+  color: var(--bg-primary);
+}
+.btn:hover .btn__icon {
+  border-left-color: var(--bg-primary);
+  transform: translateX(3px);
+}
+
+/* Primary Vermilion Button */
+.btn-primary {
+  background: var(--accent-vermilion);
+  color: #FFFFFF;
+  border-color: var(--accent-vermilion);
+}
+.btn-primary .btn__icon {
+  border-left-color: rgba(255, 255, 255, 0.35);
+}
+.btn-primary:hover {
+  background: #111111;
+  color: #FFFFFF;
+  border-color: #111111;
+}
+.btn-primary:hover .btn__icon {
+  border-left-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Secondary Dark Button */
+.btn-dark {
+  background: #111111;
+  color: #FFFFFF;
+  border-color: #111111;
+}
+.btn-dark:hover {
+  background: var(--accent-vermilion);
+  border-color: var(--accent-vermilion);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   SCROLL REVEAL & MASKS
+───────────────────────────────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.heading-mask {
+  overflow: hidden;
+}
+.heading-mask .heading-line {
+  display: block;
+  transform: translateY(115%);
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.heading-mask.visible .heading-line {
+  transform: translateY(0);
+}
+.heading-mask.visible .heading-line:nth-child(2) { transition-delay: 0.08s; }
+.heading-mask.visible .heading-line:nth-child(3) { transition-delay: 0.16s; }
+.heading-mask.visible .heading-line:nth-child(4) { transition-delay: 0.24s; }
+
+/* ─────────────────────────────────────────────────────────────
+   HERON AI FLOATING BADGE (Right Edge Floating Tab)
+───────────────────────────────────────────────────────────── */
+.floating-badge {
+  position: fixed;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  background: var(--bg-primary);
+  border: var(--line-weight) solid var(--border-strong);
+  border-right: none;
+  box-shadow: -4px 6px 18px rgba(0, 0, 0, 0.06);
+}
+.floating-badge__icon {
+  width: 38px;
+  height: 38px;
+  background: var(--accent-vermilion);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+.floating-badge__text {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  padding: 0.9rem 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+}

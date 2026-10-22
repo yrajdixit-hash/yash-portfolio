@@ -1,0 +1,45 @@
+.interactive-heading {
+  perspective: 1200px;
+  transform-style: preserve-3d;
+  display: block;
+  user-select: none;
+}
+
+.ih-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.ih-canvas {
+  display: inline;
+  transform-style: preserve-3d;
+}
+
+.ih-word {
+  display: inline-block;
+  white-space: nowrap;
+  transform-style: preserve-3d;
+}
+
+.ih-char {
+  display: inline-block;
+  will-change: transform, color;
+  transform-style: preserve-3d;
+  transition: color 0.15s ease;
+}
+
+.ih-space {
+  display: inline-block;
+}
+
+.ih-segment {
+  display: inline;
+  transform-style: preserve-3d;
+}

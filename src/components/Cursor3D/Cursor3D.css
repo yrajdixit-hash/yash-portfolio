@@ -1,0 +1,71 @@
+.cursor-3d {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 99999;
+  will-change: transform;
+}
+
+.cursor-3d__ring {
+  width: 28px;
+  height: 28px;
+  border: 1px solid rgba(17, 17, 17, 0.4);
+  border-radius: 50%;
+  position: absolute;
+  top: -14px;
+  left: -14px;
+  transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              height 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              top 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              left 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.25s ease,
+              background-color 0.25s ease;
+}
+
+.cursor-3d__dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--accent-vermilion);
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  transition: transform 0.2s ease;
+}
+
+.cursor-3d__coords {
+  position: absolute;
+  top: 10px;
+  left: 12px;
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  user-select: none;
+  white-space: nowrap;
+  opacity: 0.7;
+}
+
+/* Hover state when over interactive targets */
+.cursor-3d--active .cursor-3d__ring {
+  width: 46px;
+  height: 46px;
+  top: -23px;
+  left: -23px;
+  border-color: var(--accent-vermilion);
+  background: rgba(255, 59, 0, 0.08);
+}
+.cursor-3d--active .cursor-3d__dot {
+  transform: scale(1.6);
+}
+.cursor-3d--active .cursor-3d__coords {
+  color: var(--accent-vermilion);
+  opacity: 1;
+}
+
+@media (pointer: coarse) {
+  .cursor-3d {
+    display: none;
+  }
+}

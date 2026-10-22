@@ -1,0 +1,146 @@
+.about {
+  position: relative;
+  background: var(--bg-primary);
+}
+
+.about__layout {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: clamp(2.5rem, 5vw, 5rem);
+  align-items: start;
+}
+
+.about__heading {
+  margin-bottom: 2.5rem;
+  color: var(--text-primary);
+}
+.about__heading-accent {
+  color: var(--accent-vermilion);
+}
+
+/* ── 4-Box Technical Matrix (Heron AI Architectural Style) ── */
+.about__matrix {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  margin-bottom: 2.5rem;
+}
+
+.about__matrix-item {
+  background: var(--bg-card);
+  padding: 1.5rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  transition: background var(--transition-fast);
+}
+.about__matrix-item:hover {
+  background: var(--bg-secondary);
+}
+
+.about__matrix-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.about__matrix-num {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--accent-vermilion);
+}
+
+.about__matrix-title {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-transform: uppercase;
+}
+.about__matrix-detail {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* ── Interactive Terminal Wrap ── */
+.about__terminal-wrap {
+  width: 100%;
+}
+
+/* ── Editorial Narrative Card ── */
+.about__card {
+  position: relative;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  padding: clamp(2rem, 4vw, 3.2rem);
+  display: flex;
+  flex-direction: column;
+  gap: 1.35rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.03);
+}
+
+.about__card-badge {
+  color: var(--accent-vermilion);
+  padding-bottom: 0.5rem;
+  border-bottom: 1px dashed var(--border);
+}
+
+.about__lead {
+  font-size: 1.12rem;
+  line-height: 1.65;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.about__body {
+  font-size: 0.94rem;
+  line-height: 1.75;
+  color: var(--text-secondary);
+}
+.about__body strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.about__card-footer {
+  margin-top: 1rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.about__signature {
+  color: var(--text-muted);
+}
+
+.about__pulse-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--accent-vermilion);
+}
+.about__pulse-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-vermilion);
+}
+
+@media (max-width: 900px) {
+  .about__layout {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+}
+@media (max-width: 520px) {
+  .about__matrix {
+    grid-template-columns: 1fr;
+  }
+}

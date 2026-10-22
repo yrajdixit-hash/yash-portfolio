@@ -1,0 +1,293 @@
+.hero {
+  position: relative;
+  min-height: 100vh;
+  padding-top: clamp(6.5rem, 11vw, 9.5rem);
+  padding-bottom: clamp(3rem, 6vw, 5rem);
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+
+/* Heron AI Signature Red Laser Horizon Line */
+.hero__horizon {
+  position: absolute;
+  top: 48%;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0.9;
+}
+.hero__horizon-tag {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--accent-vermilion);
+  padding: 0 0.8rem;
+  background: var(--bg-primary);
+  letter-spacing: 0.08em;
+}
+.hero__horizon-line {
+  height: 1px;
+  background: var(--accent-vermilion);
+  flex: 1;
+  max-width: 520px;
+}
+
+.hero__inner {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(3rem, 6vw, 5.5rem);
+}
+
+.hero__layout {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: start;
+}
+
+/* ── Left Column ── */
+.hero__content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.hero__top-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: fit-content;
+}
+.hero__status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-vermilion);
+  animation: heroDotBlink 2s infinite ease-in-out;
+}
+@keyframes heroDotBlink {
+  0%, 100% { opacity: 0.3; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.3); }
+}
+
+.hero__title {
+  color: var(--text-primary);
+}
+.hero__title-accent {
+  color: var(--accent-vermilion);
+}
+
+.hero__desc {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  max-width: 540px;
+}
+.hero__desc strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.hero__ctas {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding-top: 0.5rem;
+}
+.hero__btn {
+  height: 52px;
+}
+
+/* ── Right Column ── */
+.hero__visual {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  position: relative;
+}
+
+.hero__art {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+}
+
+.hero__svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Dossier Table (Heron AI Architectural Information Block) */
+.hero__dossier {
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  padding: 1.25rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+.hero__dossier-head {
+  padding-bottom: 0.5rem;
+  border-bottom: 1px dashed var(--border);
+}
+.hero__dossier-head .label-sm {
+  font-size: 0.65rem;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+.hero__dossier-table {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+.hero__dossier-row {
+  display: grid;
+  grid-template-columns: 95px 1fr;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  line-height: 1.4;
+}
+.hero__dossier-key {
+  color: var(--text-muted);
+}
+.hero__dossier-val {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+/* ── Heron AI Client/Tech Strip ── */
+/* ── Heron AI Velocity Tech Strip (Momentum & Scroll Reactive) ── */
+.hero__strip {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--border);
+  background: var(--bg-secondary);
+  overflow: hidden;
+  position: relative;
+}
+.hero__strip-head {
+  padding: 0.9rem 1.4rem;
+  background: var(--bg-primary);
+  border-right: 1px solid var(--border);
+  flex-shrink: 0;
+  z-index: 2;
+  box-shadow: 4px 0 12px rgba(0, 0, 0, 0.04);
+}
+.hero__strip-head .label-sm {
+  font-size: 0.65rem;
+  color: var(--accent-vermilion);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+.hero__strip-track-wrapper {
+  overflow: hidden;
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  mask-image: linear-gradient(to right, transparent, black 2.5%, black 97.5%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 2.5%, black 97.5%, transparent);
+}
+.hero__strip-track {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0.65rem 0;
+  white-space: nowrap;
+  will-change: transform;
+  user-select: none;
+}
+.hero__strip-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--text-primary);
+  padding: 0.35rem 0.65rem;
+  background: rgba(0, 0, 0, 0.03);
+  border: 1px solid var(--border-subtle);
+  border-radius: 2px;
+  transition: background var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+}
+.hero__strip-item:hover {
+  background: var(--bg-primary);
+  border-color: var(--accent-vermilion);
+  color: var(--accent-vermilion);
+}
+.hero__strip-item--file {
+  color: var(--accent-vermilion);
+  border-color: rgba(255, 59, 0, 0.3);
+  background: rgba(255, 59, 0, 0.04);
+}
+.hero__strip-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent-vermilion);
+  display: inline-block;
+  box-shadow: 0 0 6px rgba(255, 59, 0, 0.6);
+}
+.hero__strip-mark {
+  font-size: 0.55rem;
+  color: var(--text-muted);
+}
+.hero__strip-sep {
+  color: var(--border);
+  font-size: 0.7rem;
+  margin-left: 0.2rem;
+}
+.hero__strip-note {
+  padding: 0.9rem 1.25rem;
+  border-left: 1px solid var(--border);
+  font-size: 0.62rem;
+  color: var(--text-muted);
+  flex-shrink: 0;
+  z-index: 2;
+  background: var(--bg-secondary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+}
+.hero__strip-pulse {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #34D399;
+  display: inline-block;
+  animation: pulse-dot 1.8s infinite;
+}
+
+@keyframes pulse-dot {
+  0% { transform: scale(0.9); opacity: 0.7; }
+  50% { transform: scale(1.3); opacity: 1; }
+  100% { transform: scale(0.9); opacity: 0.7; }
+}
+
+@media (max-width: 960px) {
+  .hero__layout {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  .hero__horizon { display: none; }
+}
+@media (max-width: 540px) {
+  .hero__ctas {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .hero__strip-head { padding: 0.8rem 1rem; }
+  .hero__strip-track { gap: 1rem; }
+}

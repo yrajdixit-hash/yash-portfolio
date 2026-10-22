@@ -1,0 +1,122 @@
+.exploring {
+  position: relative;
+  background: var(--bg-primary);
+}
+
+.exploring__intro {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 3.5rem;
+  max-width: 820px;
+}
+.exploring__heading {
+  margin: 0;
+  color: var(--text-primary);
+}
+.exploring__heading-accent {
+  color: var(--accent-vermilion);
+}
+.exploring__lead {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* ── Heron AI 3-Column Architectural Matrix ── */
+.exploring__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.exploring__card {
+  background: var(--bg-card);
+  padding: 2.2rem 1.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.35rem;
+  transition: background var(--transition-fast);
+  position: relative;
+}
+.exploring__card:hover {
+  background: var(--bg-secondary);
+}
+
+.exploring__card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.exploring__card-code {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--accent-vermilion);
+}
+.exploring__card-status {
+  color: var(--text-muted);
+}
+
+.exploring__card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+.exploring__card-domain {
+  font-size: 0.65rem;
+  color: var(--accent-vermilion);
+  letter-spacing: 0.08em;
+  font-weight: 600;
+}
+.exploring__card-label {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.25;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+}
+.exploring__card-desc {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+.exploring__card-footer {
+  margin-top: auto;
+  padding-top: 1.2rem;
+  border-top: 1px dashed var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.exploring__card-tag {
+  color: var(--text-muted);
+  font-size: 0.62rem;
+}
+.exploring__card-arrow {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  color: var(--accent-vermilion);
+  transition: transform var(--transition-fast);
+}
+.exploring__card:hover .exploring__card-arrow {
+  transform: translateX(4px);
+}
+
+@media (max-width: 960px) {
+  .exploring__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 600px) {
+  .exploring__grid {
+    grid-template-columns: 1fr;
+  }
+}
