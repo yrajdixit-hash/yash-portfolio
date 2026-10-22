@@ -10,7 +10,7 @@
 .cursor-3d__ring {
   width: 28px;
   height: 28px;
-  border: 1px solid rgba(17, 17, 17, 0.4);
+  border: 1px solid var(--border-cursor, rgba(17, 17, 17, 0.4));
   border-radius: 50%;
   position: absolute;
   top: -14px;

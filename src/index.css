@@ -5,6 +5,8 @@
 ───────────────────────────────────────────────────────────── */
 
 :root {
+  color-scheme: light;
+
   /* Canvas & Surfaces (Architectural Parchment / Warm Stone Paper) */
   --bg-primary:      #E8E6DF;
   --bg-secondary:    #E2DFD6;
@@ -12,6 +14,10 @@
   --bg-elevated:     #DDD9CF;
   --bg-dark:         #111111;
   --bg-dark-card:    #181818;
+
+  /* Navbar */
+  --bg-navbar:          rgba(232, 230, 223, 0.85);
+  --bg-navbar-scrolled: rgba(232, 230, 223, 0.95);
 
   /* Typography Colors */
   --text-primary:    #111111;
@@ -30,6 +36,12 @@
   --border-subtle:   #D9D6CC;
   --border-strong:   #111111;
   --border-dark:     #2A2A2A;
+  --border-cursor:   rgba(17, 17, 17, 0.4);
+
+  /* Shadows & Texture */
+  --card-shadow:     0 10px 30px rgba(0, 0, 0, 0.03);
+  --grid-line-color: rgba(0, 0, 0, 0.025);
+  --noise-opacity:   0.035;
 
   /* Typography Scales */
   --font-heading:    'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -40,11 +52,97 @@
   --transition-fast: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   --transition-med:  0.45s cubic-bezier(0.16, 1, 0.3, 1);
   --transition-slow: 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  --theme-transition: background-color 0.35s ease, border-color 0.35s ease, color 0.35s ease, box-shadow 0.35s ease;
 
   /* Layout geometry */
   --max-w:           1340px;
   --section-px:      clamp(1.25rem, 4vw, 4rem);
   --line-weight:     1px;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   DARK THEME TOKENS (Architectural Obsidian & Electric Vermilion)
+───────────────────────────────────────────────────────────── */
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  /* Canvas & Surfaces (Architectural Obsidian / Matte Carbon) */
+  --bg-primary:      #0E0F12;
+  --bg-secondary:    #14151B;
+  --bg-card:         #191B22;
+  --bg-elevated:     #22242E;
+  --bg-dark:         #08080A;
+  --bg-dark-card:    #101116;
+
+  /* Navbar */
+  --bg-navbar:          rgba(14, 15, 18, 0.85);
+  --bg-navbar-scrolled: rgba(14, 15, 18, 0.95);
+
+  /* Typography Colors */
+  --text-primary:    #F5F5F7;
+  --text-secondary:  #A2A5B3;
+  --text-muted:      #6B6F7F;
+  --text-light:      #FFFFFF;
+  --text-light-muted:#8F93A3;
+
+  /* Signature Accents (Vibrant Electric Vermilion) */
+  --accent-vermilion:#FF481F;
+  --accent-orange:   #FF5E28;
+  --accent-sand:     #343846;
+
+  /* Architectural Grid & Border Lines */
+  --border:          #262833;
+  --border-subtle:   #1E202A;
+  --border-strong:   #F5F5F7;
+  --border-dark:     #383C4C;
+  --border-cursor:   rgba(255, 255, 255, 0.45);
+
+  /* Shadows & Texture */
+  --card-shadow:     0 14px 40px rgba(0, 0, 0, 0.45);
+  --grid-line-color: rgba(255, 255, 255, 0.035);
+  --noise-opacity:   0.022;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+
+    /* Canvas & Surfaces (Architectural Obsidian / Matte Carbon) */
+    --bg-primary:      #0E0F12;
+    --bg-secondary:    #14151B;
+    --bg-card:         #191B22;
+    --bg-elevated:     #22242E;
+    --bg-dark:         #08080A;
+    --bg-dark-card:    #101116;
+
+    /* Navbar */
+    --bg-navbar:          rgba(14, 15, 18, 0.85);
+    --bg-navbar-scrolled: rgba(14, 15, 18, 0.95);
+
+    /* Typography Colors */
+    --text-primary:    #F5F5F7;
+    --text-secondary:  #A2A5B3;
+    --text-muted:      #6B6F7F;
+    --text-light:      #FFFFFF;
+    --text-light-muted:#8F93A3;
+
+    /* Signature Accents (Vibrant Electric Vermilion) */
+    --accent-vermilion:#FF481F;
+    --accent-orange:   #FF5E28;
+    --accent-sand:     #343846;
+
+    /* Architectural Grid & Border Lines */
+    --border:          #262833;
+    --border-subtle:   #1E202A;
+    --border-strong:   #F5F5F7;
+    --border-dark:     #383C4C;
+    --border-cursor:   rgba(255, 255, 255, 0.45);
+
+    /* Shadows & Texture */
+    --card-shadow:     0 14px 40px rgba(0, 0, 0, 0.45);
+    --grid-line-color: rgba(255, 255, 255, 0.035);
+    --noise-opacity:   0.022;
+  }
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -62,6 +160,7 @@ html {
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--bg-primary);
   color: var(--text-primary);
+  transition: background-color 0.35s ease, color 0.35s ease;
 }
 
 body {
@@ -72,6 +171,7 @@ body {
   line-height: 1.6;
   overflow-x: hidden;
   position: relative;
+  transition: background-color 0.35s ease, color 0.35s ease;
 }
 
 /* Paper / drafting canvas subtle texture overlay */
@@ -83,6 +183,8 @@ body::before {
   pointer-events: none;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
   background-size: 140px;
+  opacity: var(--noise-opacity);
+  transition: opacity 0.35s ease;
 }
 
 /* Architectural blueprint subtle drafting grid */
@@ -93,9 +195,10 @@ body::after {
   z-index: 0;
   pointer-events: none;
   background-image:
-    linear-gradient(to right, rgba(0, 0, 0, 0.025) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.025) 1px, transparent 1px);
+    linear-gradient(to right, var(--grid-line-color) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line-color) 1px, transparent 1px);
   background-size: 60px 60px;
+  transition: background-image 0.35s ease;
 }
 
 img { max-width: 100%; display: block; }

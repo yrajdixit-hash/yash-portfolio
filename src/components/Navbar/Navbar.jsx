@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import MagneticButton from '../MagneticButton/MagneticButton'
+import ThemeToggle from '../ThemeToggle/ThemeToggle'
 import './Navbar.css'
 
 const links = [
@@ -61,21 +62,29 @@ export default function Navbar() {
           ))}
         </nav>
 
-        {/* Magnetic Heron AI Split-Box Button */}
-        <MagneticButton href="mailto:Yrajdixit@gmail.com" className="btn btn-primary navbar__cta">
-          <span className="btn__label">LET'S TALK</span>
-          <span className="btn__icon">→</span>
-        </MagneticButton>
+        {/* Desktop Actions: Theme Toggle + Magnetic CTA */}
+        <div className="navbar__actions">
+          <ThemeToggle variant="standard" />
 
-        {/* Hamburger */}
-        <button
-          className={`navbar__hamburger${menuOpen ? ' navbar__hamburger--open' : ''}`}
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-expanded={menuOpen}
-          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-        >
-          <span /><span /><span />
-        </button>
+          {/* Magnetic Heron AI Split-Box Button */}
+          <MagneticButton href="mailto:Yrajdixit@gmail.com" className="btn btn-primary navbar__cta">
+            <span className="btn__label">LET'S TALK</span>
+            <span className="btn__icon">→</span>
+          </MagneticButton>
+        </div>
+
+        {/* Mobile controls: Compact theme toggle + Hamburger */}
+        <div className="navbar__mobile-controls">
+          <ThemeToggle variant="compact" className="navbar__mobile-theme-btn" />
+          <button
+            className={`navbar__hamburger${menuOpen ? ' navbar__hamburger--open' : ''}`}
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-expanded={menuOpen}
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+          >
+            <span /><span /><span />
+          </button>
+        </div>
       </div>
 
       {/* Full-width architectural border */}
@@ -90,10 +99,13 @@ export default function Navbar() {
               <span>{label}</span>
             </a>
           ))}
-          <a href="mailto:Yrajdixit@gmail.com" className="btn btn-primary navbar__mobile-cta" onClick={closeMenu}>
-            <span className="btn__label">INITIATE CONTACT</span>
-            <span className="btn__icon">→</span>
-          </a>
+          <div className="navbar__mobile-drawer-actions">
+            <ThemeToggle variant="mobile" />
+            <a href="mailto:Yrajdixit@gmail.com" className="btn btn-primary navbar__mobile-cta" onClick={closeMenu}>
+              <span className="btn__label">INITIATE CONTACT</span>
+              <span className="btn__icon">→</span>
+            </a>
+          </div>
         </nav>
       </div>
     </header>

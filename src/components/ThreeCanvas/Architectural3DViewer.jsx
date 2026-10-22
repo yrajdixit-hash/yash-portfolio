@@ -1,14 +1,118 @@
 import { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
+import { useTheme } from '../../context/ThemeContext'
 import './Architectural3DViewer.css'
 
 export default function Architectural3DViewer() {
   const mountRef = useRef(null)
+  const { theme } = useTheme()
+  const isDark = theme === 'dark'
+
   const [azimuth, setAzimuth] = useState(0)
   const [isWireframe, setIsWireframe] = useState(false)
   const [autoRotate, setAutoRotate] = useState(true)
+
+  const autoRotateRef = useRef(autoRotate)
+  autoRotateRef.current = autoRotate
+
   const sceneRef = useRef(null)
+  const groupRef = useRef(null)
+  const gridHelperRef = useRef(null)
   const materialsRef = useRef([])
+  const lineMaterialsRef = useRef([])
+  const colMaterialsRef = useRef([])
+  const ambientLightRef = useRef(null)
+  const dirLightRef = useRef(null)
+  const fillLightRef = useRef(null)
+  const particlesMatRef = useRef(null)
+
+  // React to theme changes smoothly
+  useEffect(() => {
+    const scene = sceneRef.current
+    if (!scene) return
+
+    if (isDark) {
+      scene.background = new THREE.Color(0x14151B)
+      if (ambientLightRef.current) {
+        ambientLightRef.current.color.setHex(0xA0A6BE)
+        ambientLightRef.current.intensity = 0.95
+      }
+      if (dirLightRef.current) {
+        dirLightRef.current.intensity = 1.9
+      }
+      if (fillLightRef.current) {
+        fillLightRef.current.color.setHex(0xFF481F)
+        fillLightRef.current.intensity = 0.65
+      }
+      // Update block materials
+      const darkColors = [0x191B22, 0x222530, 0x2A2E3D]
+      materialsRef.current.forEach((mat, idx) => {
+        mat.color.setHex(darkColors[idx % darkColors.length])
+      })
+      // Update wireframe line edges
+      lineMaterialsRef.current.forEach((mat) => {
+        mat.color.setHex(0x52576C)
+      })
+      // Update pillars
+      colMaterialsRef.current.forEach((mat) => {
+        mat.color.setHex(0x383C4C)
+      })
+      // Update particles
+      if (particlesMatRef.current) {
+        particlesMatRef.current.color.setHex(0x8C92A8)
+      }
+      // Swap grid helper
+      if (gridHelperRef.current && groupRef.current) {
+        groupRef.current.remove(gridHelperRef.current)
+        gridHelperRef.current.geometry.dispose()
+        gridHelperRef.current.material.dispose()
+        const newGrid = new THREE.GridHelper(28, 28, 0xFF481F, 0x262936)
+        newGrid.position.y = -0.01
+        groupRef.current.add(newGrid)
+        gridHelperRef.current = newGrid
+      }
+    } else {
+      scene.background = new THREE.Color(0xE2DFD6)
+      if (ambientLightRef.current) {
+        ambientLightRef.current.color.setHex(0xFFFFFF)
+        ambientLightRef.current.intensity = 1.3
+      }
+      if (dirLightRef.current) {
+        dirLightRef.current.intensity = 2.2
+      }
+      if (fillLightRef.current) {
+        fillLightRef.current.color.setHex(0xE8E6DF)
+        fillLightRef.current.intensity = 0.9
+      }
+      // Update block materials
+      const lightColors = [0xE8E6DF, 0xDDD9CF, 0xF2F0E8]
+      materialsRef.current.forEach((mat, idx) => {
+        mat.color.setHex(lightColors[idx % lightColors.length])
+      })
+      // Update wireframe line edges
+      lineMaterialsRef.current.forEach((mat) => {
+        mat.color.setHex(0x111111)
+      })
+      // Update pillars
+      colMaterialsRef.current.forEach((mat) => {
+        mat.color.setHex(0x111111)
+      })
+      // Update particles
+      if (particlesMatRef.current) {
+        particlesMatRef.current.color.setHex(0x111111)
+      }
+      // Swap grid helper
+      if (gridHelperRef.current && groupRef.current) {
+        groupRef.current.remove(gridHelperRef.current)
+        gridHelperRef.current.geometry.dispose()
+        gridHelperRef.current.material.dispose()
+        const newGrid = new THREE.GridHelper(28, 28, 0x111111, 0xCBC7BC)
+        newGrid.position.y = -0.01
+        groupRef.current.add(newGrid)
+        gridHelperRef.current = newGrid
+      }
+    }
+  }, [isDark])
 
   useEffect(() => {
     const container = mountRef.current
@@ -20,7 +124,7 @@ export default function Architectural3DViewer() {
     // Scene & Camera
     const scene = new THREE.Scene()
     sceneRef.current = scene
-    scene.background = new THREE.Color(0xE2DFD6) // Matches --bg-secondary
+    scene.background = new THREE.Color(isDark ? 0x14151B : 0xE2DFD6)
 
     const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000)
     camera.position.set(16, 12, 22)
@@ -35,28 +139,48 @@ export default function Architectural3DViewer() {
     container.appendChild(renderer.domElement)
 
     // Lighting
-    const ambientLight = new THREE.AmbientLight(0xFFFFFF, 1.3)
+    const ambientLight = new THREE.AmbientLight(
+      isDark ? 0xA0A6BE : 0xFFFFFF,
+      isDark ? 0.95 : 1.3
+    )
+    ambientLightRef.current = ambientLight
     scene.add(ambientLight)
 
-    const dirLight = new THREE.DirectionalLight(0xFFFAF0, 2.2)
+    const dirLight = new THREE.DirectionalLight(0xFFFAF0, isDark ? 1.9 : 2.2)
     dirLight.position.set(20, 30, 15)
     dirLight.castShadow = true
+    dirLightRef.current = dirLight
     scene.add(dirLight)
 
-    const fillLight = new THREE.DirectionalLight(0xE8E6DF, 0.9)
+    const fillLight = new THREE.DirectionalLight(
+      isDark ? 0xFF481F : 0xE8E6DF,
+      isDark ? 0.65 : 0.9
+    )
     fillLight.position.set(-15, -10, -15)
+    fillLightRef.current = fillLight
     scene.add(fillLight)
 
     // ── Model Group ──
     const group = new THREE.Group()
+    groupRef.current = group
     scene.add(group)
 
     const materials = []
     materialsRef.current = materials
+    const lineMaterials = []
+    lineMaterialsRef.current = lineMaterials
+    const colMaterials = []
+    colMaterialsRef.current = colMaterials
 
     // Ground Plane with Blueprint Grid
-    const gridHelper = new THREE.GridHelper(28, 28, 0x111111, 0xCBC7BC)
+    const gridHelper = new THREE.GridHelper(
+      28,
+      28,
+      isDark ? 0xFF481F : 0x111111,
+      isDark ? 0x262936 : 0xCBC7BC
+    )
     gridHelper.position.y = -0.01
+    gridHelperRef.current = gridHelper
     group.add(gridHelper)
 
     // Vermilion Red Sun Circle
@@ -90,7 +214,11 @@ export default function Architectural3DViewer() {
       group.add(mesh)
 
       const edges = new THREE.EdgesGeometry(geo)
-      const lineMat = new THREE.LineBasicMaterial({ color: 0x111111, linewidth: 1.5 })
+      const lineMat = new THREE.LineBasicMaterial({
+        color: isDark ? 0x52576C : 0x111111,
+        linewidth: 1.5,
+      })
+      lineMaterials.push(lineMat)
       const line = new THREE.LineSegments(edges, lineMat)
       mesh.add(line)
 
@@ -98,13 +226,14 @@ export default function Architectural3DViewer() {
     }
 
     // Towers & Pavilions
-    createArchBlock(5, 12, 5, -2, 0, 0, 0xE8E6DF)
-    createArchBlock(4.5, 8, 4.5, 3.5, 0, -1, 0xDDD9CF)
-    createArchBlock(6, 3, 4, 1.5, 4, 3, 0xF2F0E8)
+    createArchBlock(5, 12, 5, -2, 0, 0, isDark ? 0x191B22 : 0xE8E6DF)
+    createArchBlock(4.5, 8, 4.5, 3.5, 0, -1, isDark ? 0x222530 : 0xDDD9CF)
+    createArchBlock(6, 3, 4, 1.5, 4, 3, isDark ? 0x2A2E3D : 0xF2F0E8)
 
     // Structural Pillars
     const colGeo = new THREE.CylinderGeometry(0.18, 0.18, 4, 12)
-    const colMat = new THREE.MeshStandardMaterial({ color: 0x111111 })
+    const colMat = new THREE.MeshStandardMaterial({ color: isDark ? 0x383C4C : 0x111111 })
+    colMaterials.push(colMat)
     for (let i = 0; i < 4; i++) {
       const col = new THREE.Mesh(colGeo, colMat)
       const px = -0.5 + (i % 2) * 4
@@ -112,8 +241,6 @@ export default function Architectural3DViewer() {
       col.position.set(px, 2, pz)
       group.add(col)
     }
-
-
 
     // Orbiting Red Laser Ring
     const ringGeo = new THREE.TorusGeometry(9, 0.06, 16, 64)
@@ -136,10 +263,11 @@ export default function Architectural3DViewer() {
     pGeo.setAttribute('position', new THREE.Float32BufferAttribute(pCoords, 3))
     const pMat = new THREE.PointsMaterial({
       size: 0.2,
-      color: 0x111111,
+      color: isDark ? 0x8C92A8 : 0x111111,
       transparent: true,
       opacity: 0.65
     })
+    particlesMatRef.current = pMat
     const particles = new THREE.Points(pGeo, pMat)
     group.add(particles)
 
@@ -216,7 +344,7 @@ export default function Architectural3DViewer() {
       reqId = requestAnimationFrame(animate)
       time += 0.02
 
-      if (!isDragging && autoRotate) {
+      if (!isDragging && autoRotateRef.current) {
         targetRotationY += 0.003 + Math.abs(scrollVelocity) * 0.1
       }
 
@@ -226,8 +354,6 @@ export default function Architectural3DViewer() {
 
       // Decay scroll velocity
       scrollVelocity *= 0.9
-
-
 
       ringMesh.rotation.z += 0.006
       particles.rotation.y -= 0.001
@@ -253,7 +379,7 @@ export default function Architectural3DViewer() {
       if (dom && dom.parentNode) dom.parentNode.removeChild(dom)
       renderer.dispose()
     }
-  }, [autoRotate])
+  }, [])
 
   const toggleWireframe = () => {
     setIsWireframe(!isWireframe)
